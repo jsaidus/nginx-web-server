@@ -1,0 +1,42 @@
+
+name: Deploy Nginx Website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - index.html
+      - .github/workflows/deploy.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nginx-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy website to Ubuntu
+        run: |
+          scp -i ~/.ssh/devops_deploy \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            index.html deploy@192.168.56.101:/var/www/html/index.html
+
+      - name: Verify deployment
+        run: |
+          ssh -i ~/.ssh/devops_deploy \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            deploy@192.168.56.101 \
+            "test -s /var/www/html/index.html && curl -fsS http://localhost/ > /dev/null"
+          echo "Nginx deployment successful!"

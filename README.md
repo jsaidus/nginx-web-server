@@ -89,3 +89,112 @@ GitHub stores the website source code and commit history.
 ## Project Status
 
 Initial web server deployment and GitHub integration completed. CI/CD automation is planned.
+## Automated CI/CD Pipeline — GitHub Actions
+
+### Overview
+
+This project extends a manually configured Ubuntu and Nginx web server into an automated deployment environment using GitHub Actions.
+
+The project demonstrates Linux administration, Git version control, continuous integration, continuous deployment, SSH authentication, and deployment verification.
+
+### Architecture
+
+```text
+Developer / Pop!_OS
+        |
+        v
+GitHub Repository
+        |
+        +---------------------------+
+        |                           |
+        v                           v
+CI Workflow                    CD Workflow
+GitHub-hosted Runner           Self-hosted Linux Runner
+        |                           |
+Check index.html               Checkout Repository
+Validate HTML Content               |
+        |                      Secure SCP Transfer
+        v                           |
+CI Result                      Ubuntu Server
+                                    |
+                               Nginx Web Server
+                                    |
+                            SSH + HTTP Verification
+```
+
+### Continuous Integration (CI)
+
+Workflow: `.github/workflows/ci.yml`
+
+The CI pipeline runs on GitHub-hosted Ubuntu runners when code is pushed to `main` or a pull request targets `main`.
+
+The pipeline:
+
+1. Checks out the repository.
+2. Verifies that `index.html` exists.
+3. Checks for required HTML tags.
+4. Verifies the expected DevOps content.
+5. Reports successful validation.
+
+### Continuous Deployment (CD)
+
+Workflow: `.github/workflows/deploy.yml`
+
+The deployment workflow uses a self-hosted Linux runner to transfer the website to an Ubuntu server.
+
+Deployment command:
+
+```bash
+scp -i ~/.ssh/devops_deploy \
+  -o BatchMode=yes \
+  -o StrictHostKeyChecking=yes \
+  index.html deploy@192.168.56.101:/var/www/html/index.html
+```
+
+### Deployment Verification
+
+The workflow uses SSH to confirm that the deployed HTML file exists and that the local Nginx HTTP service responds successfully.
+
+Verification includes:
+
+```bash
+test -s /var/www/html/index.html
+curl -fsS http://localhost/ > /dev/null
+```
+
+Successful verification produces:
+
+```text
+Nginx deployment successful!
+```
+
+### Verified Results
+
+- GitHub Actions CI validation completed successfully.
+- GitHub Actions deployment workflow completed successfully.
+- Secure SCP file transfer succeeded.
+- Remote SSH verification completed successfully.
+- The Nginx HTTP endpoint responded successfully.
+
+### Skills Demonstrated
+
+- Ubuntu Server administration
+- VirtualBox virtual networking
+- Nginx web server configuration
+- Git and GitHub
+- GitHub Actions CI/CD
+- Self-hosted runners
+- Bash scripting
+- SSH key authentication
+- Secure file transfer using SCP
+- Automated deployment verification
+- Technical troubleshooting
+
+### Future Improvements
+
+- Make deployment conditional on successful CI checks.
+- Add comprehensive HTML validation.
+- Introduce automated deployment rollback.
+- Improve monitoring and logging.
+- Add deployment tests for website content.
+- Expand security checks for the CI/CD pipeline.

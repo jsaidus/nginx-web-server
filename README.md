@@ -88,7 +88,7 @@ GitHub stores the website source code and commit history.
 
 ## Project Status
 
-Initial web server deployment and GitHub integration completed. CI/CD automation is planned.
+Successfully implemented and tested GitHub Actions CI and CD workflows. Automated HTML validation, secure SCP deployment to Ubuntu Server, and post-deployment SSH/HTTP verification have completed successfully.
 ## Automated CI/CD Pipeline — GitHub Actions
 
 ### Overview

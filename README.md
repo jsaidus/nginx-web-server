@@ -198,3 +198,29 @@ Nginx deployment successful!
 - Improve monitoring and logging.
 - Add deployment tests for website content.
 - Expand security checks for the CI/CD pipeline.
+
+
+## Project Screenshots
+
+The following screenshots document the GitHub Actions CI/CD pipeline, secure SSH connectivity, and successful Nginx website deployment.
+
+### 1. SSH Server Verification
+![SSH Server Verification](screenshots/01-ssh-server-verification.png)
+
+### 2. Self-Hosted Runner Connected
+![Self-Hosted Runner Connected](screenshots/02-runner-connected.png)
+
+### 3. GitHub Actions Runner Test
+![Runner Test Success](screenshots/03-runner-test-success.png)
+
+### 4. Automated Deployment Workflow
+![Deployment Workflow](screenshots/04-deployment-workflow.png)
+
+### 5. Successful GitHub Actions Deployment
+![Deployment Success](screenshots/05-deployment-success.png)
+
+### 6. Website Before Automated Deployment
+![Website Before](screenshots/06-website-before.png)
+
+### 7. Website After Automated Deployment
+![Website After](screenshots/07-website-after.png)
